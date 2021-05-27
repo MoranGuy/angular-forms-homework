@@ -1,0 +1,38 @@
+<h2>Reactive Form</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <input placeholder="Your Username" type="text" formControlName="username" />
+
+    <div class="error" *ngIf="form.get('username')?.errors && (form.get('username')?.dirty || form.get('username')?.touched)">
+      Your username must contain a number.
+    </div>
+  </div>
+  <div>
+    <input
+      type="password"
+      placeholder="Your Password"
+      formControlName="password"
+    />
+    <div class="error" *ngIf="form.get('password')?.errors && (form.get('password')?.dirty || form.get('password')?.touched)">
+      Your password must have uppercase and lowercase letters and number.
+    </div>
+  </div>
+
+  <div formArrayName="emails">
+    <div
+      class="emails-row"
+      *ngFor="let email of emailsFormArray.controls; let i = index"
+    >
+      <input
+        type="text"
+        [placeholder]="'Email ' + (i + 1)"
+        [formControlName]="i"
+      />
+      <button class="delete" (click)="removeControl(i)">X</button>
+      <div class="error" *ngIf="emailsFormArray.controls[i].errors && (emailsFormArray.controls[i].dirty || emailsFormArray.controls[i].touched)">Email can't be invalid</div>
+    </div>
+    <button type="button" (click)="addControl()">Add email</button>
+  </div>
+
+  <button [disabled]="form.invalid" type="submit">Submit</button>
+</form>

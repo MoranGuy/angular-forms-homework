@@ -1,0 +1,36 @@
+<h2>Template driven form</h2>
+<form #myForm="ngForm" (ngSubmit)="onSubmit()">
+  <div>
+    <input
+      placeholder="example@gmail.com"
+      type="text"
+      name="emailForm"
+      ngModel
+      required
+      email
+      #emailControl="ngModel"
+    />
+
+    <div class="error" *ngIf="emailControl.invalid && (emailControl.dirty || emailControl.touched)">
+      Email fiend cannot be empty and should be valid.
+    </div>
+  </div>
+
+  <div>
+    <input
+      placeholder="Your Password"
+      type="password"
+      name="passwordForm"
+      ngModel
+      required
+      minlength="6"
+      maxlength="20"
+      #passwordControl="ngModel"
+    />
+
+    <div class="error" *ngIf="passwordControl.invalid && (passwordControl.dirty || passwordControl.touched)">
+      Password field cannot be empty and should contain at least 6 characters.
+    </div>
+  </div>
+  <button type="submit" [disabled]="myForm.invalid">Submit</button>
+</form>
